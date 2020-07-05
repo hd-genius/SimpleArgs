@@ -11,6 +11,11 @@ public class ArgumentParser {
 
     private final Argument<?>[] arguments;
 
+    /**
+     *
+     * @param arguments Argument objects to be used when parsing and assigning argument values
+     * @return a new ArgumentParser that will parse string arguments into the given argument objects
+     */
     public static ArgumentParser forArguments(Argument<?>... arguments) {
         return new ArgumentParser(arguments);
     }
@@ -19,6 +24,10 @@ public class ArgumentParser {
         this.arguments = arguments;
     }
 
+    /**
+     *
+     * @param argumentStrings an array of strings to be parsed into arguments
+     */
     public void parseArgumentStrings(final String[] argumentStrings) {
         final Map<String, String> valuesByIdentifier = new HashMap<>();
         // TODO: populate map with identifier value pairs
