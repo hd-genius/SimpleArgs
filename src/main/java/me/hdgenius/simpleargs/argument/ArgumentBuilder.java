@@ -1,11 +1,22 @@
 package me.hdgenius.simpleargs.argument;
 
-public abstract class ArgumentBuilder<T> {
+import me.hdgenius.simpleargs.exception.UnsupportedArgumentTypeException;
 
-    protected boolean isRequired = true;
-    protected T[] possibleValues;
-    protected T defaultValue;
-    protected String identifier;
+public class ArgumentBuilder<T> {
+
+    private Class<T> typeOfArgument;
+    private boolean isRequired = true;
+    private T[] possibleValues;
+    private T defaultValue;
+    private String identifier;
+
+    public static <T> ArgumentBuilder<T> forType(final Class<T> argumentType) {
+        return new ArgumentBuilder<>(argumentType);
+    }
+
+    ArgumentBuilder(final Class<T> typeOfArgument) {
+        this.typeOfArgument = typeOfArgument;
+    }
 
     public ArgumentBuilder<T> isOptional() {
         isRequired = false;
@@ -37,5 +48,14 @@ public abstract class ArgumentBuilder<T> {
         return this;
     }
 
-    abstract public Argument<T> createArgument();
+    public Argument<T> createArgument() {
+        final ArgumentCreator<T> creator = ArgumentCreatorRepository.getInstance().getCreatorForType(typeOfArgument)
+                .orElseThrow(() -> new UnsupportedArgumentTypeException());
+        return creator.createArgument(isRequired, identifier, possibleValues, defaultValue);
+    }
+
+    static {
+        final ArgumentCreatorRepository repository = ArgumentCreatorRepository.getInstance();
+        repository.registerCreatorForType((isRequired, identifier, possibleValues, defaultValue) -> new Argument<Boolean>(isRequired, identifier, possibleValues, defaultValue, Boolean::parseBoolean), Boolean.class);
+    }
 }

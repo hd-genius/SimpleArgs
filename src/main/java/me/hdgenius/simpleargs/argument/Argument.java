@@ -3,23 +3,27 @@ package me.hdgenius.simpleargs.argument;
 import me.hdgenius.simpleargs.exception.InvalidValueException;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
-public abstract class Argument<T> {
+public class Argument<T> {
 
     private final boolean isRequired;
     private final String identifier;
     private final T[] possibleValues;
     private final T defaultValue;
+    final Function<String, T> argumentParser;
     private T value;
 
     public Argument(final boolean isRequired,
                     final String identifier,
                     final T[] possibleValues,
-                    final T defaultValue) {
+                    final T defaultValue,
+                    final Function<String, T> argumentParser) {
         this.isRequired = isRequired;
         this.identifier = identifier;
         this.possibleValues = possibleValues;
         this.defaultValue = defaultValue;
+        this.argumentParser = argumentParser;
     }
 
     /**
@@ -51,7 +55,7 @@ public abstract class Argument<T> {
      * @param valueToAccept a string representation of the value that was assigned to this argument
      */
     public void acceptValue(final String valueToAccept) {
-        final T parsedValue = parseValue(valueToAccept);
+        final T parsedValue = argumentParser.apply(valueToAccept);
         if (isOneOfThePossibleValues(parsedValue)) {
             value = parsedValue;
         } else {
@@ -78,7 +82,5 @@ public abstract class Argument<T> {
             return true;
         }
     }
-
-    protected abstract T parseValue(final String valueToParse);
 
 }
