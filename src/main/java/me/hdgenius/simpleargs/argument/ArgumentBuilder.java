@@ -4,12 +4,18 @@ import me.hdgenius.simpleargs.exception.UnsupportedArgumentTypeException;
 
 public class ArgumentBuilder<T> {
 
-    private Class<T> typeOfArgument;
+    private final Class<T> typeOfArgument;
     private boolean isRequired = true;
     private T[] possibleValues;
     private T defaultValue;
     private String identifier;
 
+    /**
+     *
+     * @param argumentType the class of the argument to build
+     * @param <T> the type of the argument to build
+     * @return an argument builder that will build an argument for the specified type of class
+     */
     public static <T> ArgumentBuilder<T> forType(final Class<T> argumentType) {
         return new ArgumentBuilder<>(argumentType);
     }
@@ -48,6 +54,10 @@ public class ArgumentBuilder<T> {
         return this;
     }
 
+    /**
+     *
+     * @return an argument that is created from the current builder configuration
+     */
     public Argument<T> createArgument() {
         final ArgumentCreator<T> creator = ArgumentCreatorRepository.getInstance().getCreatorForType(typeOfArgument)
                 .orElseThrow(() -> new UnsupportedArgumentTypeException());
