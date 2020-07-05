@@ -61,16 +61,16 @@ public class ArgumentBuilder<T> {
      * @return an argument that is created from the current builder configuration
      */
     public Argument<T> createArgument() {
-        final Function<String, T> argumentParser = ArgumentParserRepository.getInstance().getCreatorForType(typeOfArgument)
+        final Function<String, T> argumentParser = ArgumentParserRepository.getInstance().getParserForType(typeOfArgument)
                 .orElseThrow(() -> new UnsupportedArgumentTypeException());
         return new ArgumentImpl<T>(isRequired, identifier, possibleValues, defaultValue, argumentParser);
     }
 
     static {
         final ArgumentParserRepository repository = ArgumentParserRepository.getInstance();
-        repository.registerCreatorForType(Boolean::parseBoolean, Boolean.class);
-        repository.registerCreatorForType(Function.identity(), String.class);
-        repository.registerCreatorForType(Integer::parseInt, Integer.class);
-        repository.registerCreatorForType(Long::parseLong, Long.class);
+        repository.registerParserForType(Boolean::parseBoolean, Boolean.class);
+        repository.registerParserForType(Function.identity(), String.class);
+        repository.registerParserForType(Integer::parseInt, Integer.class);
+        repository.registerParserForType(Long::parseLong, Long.class);
     }
 }

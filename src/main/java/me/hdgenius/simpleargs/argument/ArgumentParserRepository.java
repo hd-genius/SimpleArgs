@@ -18,11 +18,11 @@ public class ArgumentParserRepository {
         return instance;
     }
 
-    public <T> void registerCreatorForType(final Function<String, T> argumentParser, final Class<T> type) {
+    public <T> void registerParserForType(final Function<String, T> argumentParser, final Class<T> type) {
         argumentCreatorLookup.put(type, argumentParser);
     }
 
-    public <T> Optional<Function<String, T>> getCreatorForType(final Class<T> type) {
+    public <T> Optional<Function<String, T>> getParserForType(final Class<T> type) {
         // TODO: investigate looking up subclasses
         return Optional.of((Function<String, T>)argumentCreatorLookup.get(type));
     }

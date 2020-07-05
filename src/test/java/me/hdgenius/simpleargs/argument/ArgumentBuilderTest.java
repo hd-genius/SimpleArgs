@@ -1,9 +1,10 @@
 package me.hdgenius.simpleargs.argument;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import me.hdgenius.simpleargs.exception.InvalidValueException;
+import org.junit.jupiter.api.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
 public class ArgumentBuilderTest {
@@ -20,6 +21,25 @@ public class ArgumentBuilderTest {
     public void testThatCreatedArgumentIsOptionalWhenTheIsOptionalMethodIsCalled() {
         final Argument<Boolean> argument = ArgumentBuilder.forType(Boolean.class).isOptional().createArgument();
         assertThat(argument.isOptional(), is(true));
+    }
+
+    @Nested
+    public class BooleanArgumentTest {
+
+        private Argument<Boolean> argument;
+
+        @BeforeEach
+        public void setup() {
+            argument = ArgumentBuilder.forType(Boolean.class).createArgument();
+        }
+
+        @Test
+        public void testThatCreatedBooleanArgumentsCorrectlyParseValues() {
+            final String argumentInput = "true";
+            argument.acceptValue(argumentInput);
+            assertThat(argument.getValue(), equalTo(true));
+        }
+
     }
 
 }
