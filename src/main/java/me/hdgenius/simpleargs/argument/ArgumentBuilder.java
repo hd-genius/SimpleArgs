@@ -69,5 +69,8 @@ public class ArgumentBuilder<T> {
     static {
         final ArgumentParserRepository repository = ArgumentParserRepository.getInstance();
         repository.registerCreatorForType(Boolean::parseBoolean, Boolean.class);
+        repository.registerCreatorForType(Function.identity(), String.class);
+        repository.registerCreatorForType(Integer::parseInt, Integer.class);
+        repository.registerCreatorForType(Long::parseLong, Long.class);
     }
 }
