@@ -41,7 +41,9 @@ public class ArgumentParser {
     private ArgumentAssignmentPair parseArgumentAssignmentPairFromString(final String string) {
         final String assignmentDelimiter = "=";
         final String[] splitString = string.split(assignmentDelimiter, 2);
-        return new ArgumentAssignmentPair(splitString[0], splitString[1]);
+        final String argumentIdentifier = splitString[0];
+        final String valueRepresentation = splitString[1];
+        return new ArgumentAssignmentPair(argumentIdentifier, valueRepresentation);
     }
 
     private void validateAllRequiredArgumentsArePresent(final Collection<String> argumentIdentifiers) {
