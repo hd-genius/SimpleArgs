@@ -23,6 +23,7 @@ public class ArgumentParserRepository {
     }
 
     public <T> Optional<Function<String, T>> getCreatorForType(final Class<T> type) {
+        // TODO: investigate looking up subclasses
         return Optional.of((Function<String, T>)argumentCreatorLookup.get(type));
     }
 }

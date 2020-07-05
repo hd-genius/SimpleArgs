@@ -63,7 +63,7 @@ public class ArgumentBuilder<T> {
     public Argument<T> createArgument() {
         final Function<String, T> argumentParser = ArgumentParserRepository.getInstance().getCreatorForType(typeOfArgument)
                 .orElseThrow(() -> new UnsupportedArgumentTypeException());
-        return new Argument<T>(isRequired, identifier, possibleValues, defaultValue, argumentParser);
+        return new ArgumentImpl<T>(isRequired, identifier, possibleValues, defaultValue, argumentParser);
     }
 
     static {

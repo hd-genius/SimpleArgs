@@ -1,6 +1,7 @@
 package me.hdgenius.simpleargs;
 
 import me.hdgenius.simpleargs.argument.Argument;
+import me.hdgenius.simpleargs.argument.ArgumentImpl;
 import me.hdgenius.simpleargs.exception.UnfulfilledRequiredArgumentException;
 
 import java.util.*;
@@ -16,7 +17,7 @@ public class ArgumentParser {
      * @param arguments Argument objects to be used when parsing and assigning argument values
      * @return a new ArgumentParser that will parse string arguments into the given argument objects
      */
-    public static ArgumentParser forArguments(Argument<?>... arguments) {
+    public static ArgumentParser forArguments(ArgumentImpl<?>... arguments) {
         return new ArgumentParser(arguments);
     }
 
