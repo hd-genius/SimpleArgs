@@ -2,6 +2,8 @@ package me.hdgenius.simpleargs.argument;
 
 import me.hdgenius.simpleargs.exception.UnsupportedArgumentTypeException;
 
+import java.util.function.Function;
+
 public class ArgumentBuilder<T> {
 
     private final Class<T> typeOfArgument;
@@ -59,13 +61,13 @@ public class ArgumentBuilder<T> {
      * @return an argument that is created from the current builder configuration
      */
     public Argument<T> createArgument() {
-        final ArgumentCreator<T> creator = ArgumentCreatorRepository.getInstance().getCreatorForType(typeOfArgument)
+        final Function<String, T> argumentParser = ArgumentParserRepository.getInstance().getCreatorForType(typeOfArgument)
                 .orElseThrow(() -> new UnsupportedArgumentTypeException());
-        return creator.createArgument(isRequired, identifier, possibleValues, defaultValue);
+        return new Argument<T>(isRequired, identifier, possibleValues, defaultValue, argumentParser);
     }
 
     static {
-        final ArgumentCreatorRepository repository = ArgumentCreatorRepository.getInstance();
-        repository.registerCreatorForType((isRequired, identifier, possibleValues, defaultValue) -> new Argument<Boolean>(isRequired, identifier, possibleValues, defaultValue, Boolean::parseBoolean), Boolean.class);
+        final ArgumentParserRepository repository = ArgumentParserRepository.getInstance();
+        repository.registerCreatorForType(Boolean::parseBoolean, Boolean.class);
     }
 }
