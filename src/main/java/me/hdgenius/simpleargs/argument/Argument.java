@@ -1,6 +1,11 @@
 package me.hdgenius.simpleargs.argument;
 
 public interface Argument<T> {
+
+    /**
+     *
+     * @return true if this argument is required and false otherwise
+     */
     boolean isRequired();
 
     /**
