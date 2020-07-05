@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.hdgenius</groupId>
-    <artifactId>SimpleArguments</artifactId>
+    <artifactId>SimpleArgs</artifactId>
     <version>0.1.0</version>
     <description>A library that simplifies the process of defining and parsing command line arguments</description>
     <dependencies>
