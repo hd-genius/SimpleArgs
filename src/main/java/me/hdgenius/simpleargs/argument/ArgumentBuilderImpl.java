@@ -37,7 +37,7 @@ public class ArgumentBuilderImpl<T> implements ArgumentBuilder<T> {
 
     public Argument<T> createArgument() {
         final Function<String, T> argumentParser = ArgumentParserRepository.getInstance().getParserForType(typeOfArgument)
-                .orElseThrow(() -> new UnsupportedArgumentTypeException());
+                .orElseThrow(UnsupportedArgumentTypeException::new);
         return new ArgumentImpl<T>(isRequired, identifier, defaultValue, argumentParser);
     }
 
