@@ -29,8 +29,9 @@ public class ArgumentParser {
      * @param argumentStrings an array of strings to be parsed into arguments
      */
     public void parseArgumentStrings(final String[] argumentStrings) {
-        final Map<String, String> valuesByIdentifier = new HashMap<>();
-        // TODO: populate map with identifier value pairs
+        final Map<String, String> valuesByIdentifier = Arrays.stream(argumentStrings)
+                .map(this::parseArgumentAssignmentPairFromString)
+                .collect(Collectors.toMap(pair -> pair.identifier, pair -> pair.value, (a, b) -> a));
         final Set<String> argumentIdentifiers = valuesByIdentifier.keySet();
         validateAllRequiredArgumentsArePresent(argumentIdentifiers);
         valuesByIdentifier.forEach((identifier, value) -> {
