@@ -18,8 +18,6 @@ public interface ArgumentBuilder<T> {
 
     ArgumentBuilder<T> withIdentifier(final String identifier);
 
-    ArgumentBuilder<T> withPossibleValues(final T... possibleValues);
-
     /**
      * only effects optional arguments
      * @param defaultValue

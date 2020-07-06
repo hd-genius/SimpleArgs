@@ -8,7 +8,6 @@ public class ArgumentBuilderImpl<T> implements ArgumentBuilder<T> {
 
     private final Class<T> typeOfArgument;
     private boolean isRequired = true;
-    private T[] possibleValues;
     private T defaultValue;
     private String identifier;
 
@@ -31,11 +30,6 @@ public class ArgumentBuilderImpl<T> implements ArgumentBuilder<T> {
         return this;
     }
 
-    public ArgumentBuilderImpl<T> withPossibleValues(final T... possibleValues) {
-        this.possibleValues = possibleValues;
-        return this;
-    }
-
     public ArgumentBuilderImpl<T> withDefaultValue(final T defaultValue) {
         this.defaultValue = defaultValue;
         return this;
@@ -44,7 +38,7 @@ public class ArgumentBuilderImpl<T> implements ArgumentBuilder<T> {
     public Argument<T> createArgument() {
         final Function<String, T> argumentParser = ArgumentParserRepository.getInstance().getParserForType(typeOfArgument)
                 .orElseThrow(() -> new UnsupportedArgumentTypeException());
-        return new ArgumentImpl<T>(isRequired, identifier, possibleValues, defaultValue, argumentParser);
+        return new ArgumentImpl<T>(isRequired, identifier, defaultValue, argumentParser);
     }
 
     static {
